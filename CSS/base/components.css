@@ -1,0 +1,74 @@
+/* COMPONENTS — EduGrade */
+
+/* --- BUTTONS --- */
+
+.btn {
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--radius-small);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+}
+
+.btn-secondary:hover {
+    background: var(--secondary-light);
+}
+
+
+/* --- INPUTS --- */
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-small);
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+/* --- CARD --- */
+
+.card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px); 
+    /* transform: none !important; */
+}
+
+/* --- TITLES --- */
+
+.title {
+    font-size: 26px;
+    margin-bottom: 16px;
+    color: var(--text-dark);
+}
+
+.subtitle {
+    font-size: 18px;
+    color: var(--text-medium);
+}
+
+/* --- GRID --- */
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}

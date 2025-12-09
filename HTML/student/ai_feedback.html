@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade – AI Feedback</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/student/ai_feedback.css">
+    
+    <!-- Error Handler -->
+    <script src="../../JS/general/errorHandler.js" defer></script>
+    <!-- Logout Logic -->
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div id="navbar-placeholder"></div>
+
+<script>
+    // Incarca navbar-ul pentru student
+    fetch("../../HTML/general/navbar_student.html")
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById("navbar-placeholder").innerHTML = html;
+        });
+</script>
+
+<!-- PAGE CONTENT -->
+<div class="ai-wrapper">
+
+    <header class="ai-header">
+        <h1>AI Feedback</h1>
+        <p class="ai-subtitle">
+            Personalized insights based on your quiz history.
+        </p>
+    </header>
+
+    <!-- EMPTY STATE -->
+    <section id="aiEmptyState" class="ai-empty hidden">
+        <h2>No data yet</h2>
+        <p>
+            You haven't completed any quizzes so far. Take your first quiz to see
+            your performance analysis and smart recommendations here.
+        </p>
+    </section>
+
+    <!-- MAIN CONTENT (apare doar dacă exista date) -->
+    <main id="aiContent" class="ai-content">
+
+        <!-- PERFORMANCE OVERVIEW -->
+        <section class="ai-card performance-card">
+            <h2 class="card-title">Performance Overview</h2>
+
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <div class="metric-label">Average Score</div>
+                    <div class="metric-value" id="avgScore">0.00</div>
+                    <div class="badge-level" id="avgBadge"></div> 
+                    <div class="metric-caption">Across all completed quizzes</div>
+                </div>
+
+                <div class="metric-item">
+                    <span class="metric-label">Last Score</span>
+                    <span id="lastScore" class="metric-value">–</span>
+                    <span id="trendLabel" class="metric-caption">Trend: –</span>
+                </div>
+
+                <div class="metric-item">
+                    <span class="metric-label">Best Score</span>
+                    <span id="bestScore" class="metric-value positive">–</span>
+                    <span class="metric-caption">Your top performance</span>
+                </div>
+
+                <div class="metric-item">
+                    <span class="metric-label">Completed Quizzes</span>
+                    <span id="totalQuizzes" class="metric-value neutral">0</span>
+                    <span class="metric-caption">Attempts recorded</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-card">
+            <h2 class="card-title">Subject Performance</h2>
+            <div id="subjectList" class="subject-list"></div>
+        </section>
+        
+        <!-- WEAK TOPICS / QUESTIONS -->
+        <section class="ai-card">
+            <h2 class="card-title">Challenging Questions</h2>
+            <p class="card-subtitle">
+                These questions have the lowest average scores across your attempts.
+            </p>
+
+            <ul id="weakList" class="weak-list">
+                <!-- Populat din JS -->
+            </ul>
+        </section>
+
+        <!-- AI RECOMMENDATIONS -->
+        <section class="ai-card">
+            <h2 class="card-title">AI Recommendations</h2>
+            <p class="card-subtitle">
+                Suggestions generated from your past answers to help you improve.
+            </p>
+
+            <ul id="aiRecommendations" class="ai-rec-list">
+                <!-- Populat din JS -->
+            </ul>
+        </section>
+
+    </main>
+</div>
+
+<!-- PAGE LOGIC -->
+<script src="../../JS/student/ai_feedback.js" defer></script>
+
+</body>
+</html>

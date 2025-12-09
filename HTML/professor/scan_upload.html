@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan & Upload – EduGrade</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+    <link rel="stylesheet" href="../../CSS/professor/scan_upload.css">
+
+    <!-- JS -->
+    <script src="../../JS/general/logout.js" defer></script>
+    <script src="../../JS/professor/scan_upload.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+
+<body>
+
+<div id="navbar-placeholder"></div>
+<script>
+    fetch("../../HTML/general/navbar_professor.html")
+        .then(r => r.text())
+        .then(html => document.getElementById("navbar-placeholder").innerHTML = html);
+</script>
+
+<div class="scan-wrapper">
+
+    <h1>Scan & Upload Quiz Sheets</h1>
+    <p class="subtitle">Choose how you want to provide the student quiz sheet</p>
+
+    <div class="btn-container">
+
+        <!-- Button 1: Scan Using Camera -->
+        <button class="scan-btn" id="scanCameraBtn">
+            📷 Scan Paper
+        </button>
+
+        <!-- Button 2: Upload Existing Scan -->
+        <button class="upload-btn" id="uploadBtn">
+            📁 Upload From Device
+        </button>
+
+        <!-- Hidden File Input -->
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" hidden>
+        
+
+    </div>
+
+</div>
+
+</body>
+</html>

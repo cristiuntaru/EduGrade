@@ -1,0 +1,25 @@
+/* LAYOUT — EduGrade */
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section {
+    padding: 40px 0;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.full-height {
+    min-height: 100vh;
+}
+
+.text-center {
+    text-align: center;
+}

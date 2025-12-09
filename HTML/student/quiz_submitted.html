@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Submitted</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/student/quiz_submitted.css">
+
+    <!-- Error Handler -->
+    <script src="../../JS/general/errorHandler.js" defer></script>
+</head>
+
+<body>
+
+<div class="submitted-wrapper">
+
+    <section class="result-card">
+        <h1>Your Results</h1>
+        <p class="score-label">Final Score:</p>
+        <p id="finalScore" class="score-value">0</p>
+
+        <button class="btn primary-btn" onclick="location.href='dashboard_student.html'">
+            Back to Dashboard
+        </button>
+    </section>
+
+    <section>
+        <h2>Answer Breakdown</h2>
+        <div id="answersContainer" class="answers-list"></div>
+    </section>
+
+</div>
+
+<!-- Logic -->
+<script src="../../JS/student/quiz_submitted.js" defer></script>
+
+</body>
+</html>

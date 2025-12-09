@@ -1,0 +1,30 @@
+<!-- Professor Navbar -->
+<link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+<script src="../../JS/general/logout.js" defer></script>
+<script src="../../JS/general/errorHandler.js" defer></script>
+<script src="../../JS/general/navbar_toggle.js" defer></script>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="../../HTML/professor/dashboard_professor.html" class="logo-link">
+            <img src="../../MEDIA/EduGradeLogo.svg" alt="EduGrade Logo" class="nav-logo">
+        </a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="../../HTML/professor/dashboard_professor.html">Dashboard</a></li>
+        <li><a href="../../HTML/professor/create_quiz.html">Create Quiz</a></li>
+        <li><a href="../../HTML/professor/manage_quizzes.html">My Quizzes</a></li>
+        <li><a href="../../HTML/professor/scan_upload.html">Scan & Upload</a></li>
+        <li><a href="../../HTML/professor/analytics.html">Analytics</a></li>
+        <li><button class="logout-btn-mobile" onclick="logout()">Logout</button></li>
+    </ul>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</nav>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade - Student Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/student/dashboard_student.css">
+
+    <!-- Logout Function -->
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <script>
+        const user = JSON.parse(localStorage.getItem("currentUser"));
+
+        // Load student navbar
+        fetch("../../HTML/general/navbar_student.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("navbar-placeholder").innerHTML = html;
+            });
+    </script>
+
+    <!-- DASHBOARD CONTENT -->
+    <div class="dashboard-container">
+        <h1 class="title">Welcome, Student!</h1>
+
+        <div class="card-grid">
+
+            <div class="dash-card">
+                <h2>Available Quizzes</h2>
+                <p>See the quizzes assigned by your professors.</p>
+                <button onclick="location.href='available_quizzes.html'" class="btn dashboard-btn">
+                    Go to Quizzes
+                </button>
+            </div>
+
+            <div class="dash-card">
+                <h2>My Grades</h2>
+                <p>View your performance and detailed results.</p>
+                <button onclick="location.href='my_grades.html'" class="btn dashboard-btn">View Grades</button>
+            </div>
+
+            <div class="dash-card">
+                <h2>AI Feedback</h2>
+                <p>Receive personalized learning recommendations.</p>
+                <button onclick="location.href='ai_feedback.html'" class="btn dashboard-btn">AI Feedback</button>
+            </div>
+
+        </div>
+
+        <div class="tip-card">
+            <h3>Tip of the Day</h3>
+            <p id="tipText">Loading...</p>
+        </div>
+        
+    </div>
+
+    <script src="../../JS/student/dashboard_student.js" defer></script>
+
+
+</body>
+</html>

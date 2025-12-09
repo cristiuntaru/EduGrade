@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduGrade - Home</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/general/home.css">
+</head>
+<body>
+
+    <div class="home-wrapper">
+        <div class="home-card card">
+            <h1 class="title">Welcome to EduGrade!</h1>
+
+            <p class="subtitle">
+                You are now successfully logged in.  
+                This is a placeholder homepage used for testing navigation after Login/Register.
+            </p>
+
+            <button class="btn logout-btn" id="logoutBtn">
+                Log out
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Logout Function
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("currentUser");
+            window.location.href = "login.html"; 
+        });
+    </script>
+    <script src="../../JS/general/errorHandler.js"></script>
+    
+</body>
+</html>

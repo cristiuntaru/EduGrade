@@ -1,0 +1,29 @@
+/* VARIABLES — EduGrade Design System */
+
+:root {
+
+    /* BRAND COLORS */
+    --primary: #4C84FF;       /* albastru deschis principal */
+    --primary-light: #6C9BFF;
+    --primary-dark: #2B65E0;
+
+    --secondary: #4CCF83;     /* verde deschis, accente */
+    --secondary-light: #6EE8A0;
+
+    /* BASE COLORS */
+    --bg-light: #ffffff;      /* fundal alb */
+    --bg-soft: #f5f7fa;       /* gri albicios soft */
+    --text-dark: #222831;
+    --text-medium: #444;
+    --border-light: #ddd;
+
+    /* RADIUS + SHADOWS */
+    --radius: 12px;
+    --radius-small: 8px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+    /* SPACING */
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 32px;
+}

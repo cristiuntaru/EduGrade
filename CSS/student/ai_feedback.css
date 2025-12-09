@@ -1,0 +1,254 @@
+.ai-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px 40px;
+}
+
+/* HEADER */
+
+.ai-header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.ai-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+}
+
+/* EMPTY STATE */
+
+.ai-empty {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    text-align: center;
+}
+
+.ai-empty h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.ai-empty p {
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+/* GENERIC CARD */
+
+.ai-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 26px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+}
+
+.card-title {
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: var(--text-dark);
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+/* PERFORMANCE GRID */
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 12px;
+}
+
+.metric-item {
+    background: #f7f9ff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metric-label {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.metric-value.positive {
+    color: #11a36a;
+}
+
+.metric-value.neutral {
+    color: #555a7a;
+}
+
+.metric-caption {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* WEAK QUESTIONS LIST */
+
+.weak-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.weak-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #f9fafb;
+    border-left: 5px solid #ffb74d;
+}
+
+.weak-text {
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.weak-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.weak-score-badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 70px;
+    text-align: center;
+}
+
+.weak-score-low {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.weak-score-medium {
+    background: #fff8e1;
+    color: #f57c00;
+}
+
+.weak-score-ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* AI RECOMMENDATIONS */
+
+.ai-rec-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ai-rec-list li {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f6f7ff;
+    font-size: 14px;
+    color: var(--text-dark);
+    position: relative;
+    padding-left: 28px;
+}
+
+.ai-rec-list li::before {
+    content: "•";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--primary);
+}
+
+/* SMALL UTILITIES */
+
+.hidden {
+    display: none !important;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Container general */
+.subject-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 15px;
+}
+
+/* Card individual */
+.subject-item {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    border-left: 6px solid var(--primary);
+    transition: transform 0.15s ease;
+}
+    
+.subject-item:hover {
+    transform: none;
+}
+
+/* Titlul materiei */
+.subject-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+/* Linii individuale */
+.subject-stat {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin: 3px 0;
+}
+
+.subject-stat strong {
+    color: var(--primary);
+}

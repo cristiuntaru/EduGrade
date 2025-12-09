@@ -1,0 +1,156 @@
+/* ---------------------------
+   PAGE LAYOUT
+----------------------------*/
+
+.submitted-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* ---------------------------
+   TOP RESULT CARD
+----------------------------*/
+
+.result-card {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+}
+
+.score-label {
+    font-size: 22px;
+    color: var(--text-dark);
+}
+
+.score-value {
+    font-size: 64px;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 10px 0 20px 0;
+}
+
+/* ---------------------------
+   ANSWERS SECTION
+----------------------------*/
+
+.answers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.answer-item {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 6px solid var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.answer-item h3 {
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+/* ---------------------------
+   ANSWER COLOR CODING
+----------------------------*/
+
+.answer-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.answer-list li {
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Verde deschis — corect & selectat */
+.ans-correct-chosen {
+    background-color: #b1e7b1;
+    border-left: 5px solid #1e8c4a;
+}
+
+/* Verde închis — corect dar neales */
+.ans-correct-missed {
+    background-color: #d4f8d4;
+    border-left: 5px solid #9ae6ba;
+}
+
+/* Roșu — selectat dar greșit */
+.ans-wrong-chosen {
+    background-color: #ffd6d6;
+    border-left: 5px solid #e74c3c;
+}
+
+/* Gri — răspuns greșit neales (informativ) */
+.ans-neutral {
+    background-color: #efefef;
+    border-left: 5px solid #bfbfbf;
+}
+
+.ans-icon {
+    font-weight: bold;
+    width: 20px;
+    display: inline-block;
+}
+
+/* ---------------------------
+   OLD CLASSES (KEPT FOR SAFETY)
+----------------------------*/
+
+.correct-answer {
+    color: green;
+    font-weight: bold;
+}
+
+.wrong-answer {
+    color: red;
+    font-weight: bold;
+}
+
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score-badge {
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+}
+
+/* Full 2.00 pts */
+.score-badge-full {
+    background-color: #2ecc71;
+}
+
+/* Partial score */
+.score-badge-partial {
+    background-color: #f1c40f;
+    color: black;
+}
+
+/* Zero pts */
+.score-badge-zero {
+    background-color: #e74c3c;
+}

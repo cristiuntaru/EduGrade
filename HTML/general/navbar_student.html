@@ -1,0 +1,29 @@
+<!-- Student Navbar -->
+<link rel="stylesheet" href="../../CSS/general/navbar_student.css">
+<script src="../../JS/general/logout.js" defer></script>
+<script src="../../JS/general/errorHandler.js" defer></script>
+<script src="../../JS/general/navbar_toggle.js" defer></script>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="../student/dashboard_student.html">
+            <img src="../../MEDIA/EduGradeLogo.svg" alt="EduGrade Logo" class="nav-logo">
+        </a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="../student/dashboard_student.html">Dashboard</a></li>
+        <li><a href="../student/available_quizzes.html">My Quizzes</a></li>
+        <li><a href="../student/my_grades.html">My Grades</a></li>
+        <li><a href="../student/ai_feedback.html">AI Feedback</a></li>
+        <li><button class="logout-btn-mobile" onclick="logout()">Logout</button></li>
+    </ul>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</nav>

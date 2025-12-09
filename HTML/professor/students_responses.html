@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Responses</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+    <link rel="stylesheet" href="../../CSS/professor/students_responses.css">
+
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+
+<body>
+    
+    <div id="navbar-placeholder"></div>
+    <script>
+    fetch("../../HTML/general/navbar_professor.html")
+        .then(res => res.text())
+        .then(html => document.getElementById("navbar-placeholder").innerHTML = html);
+    </script>
+    
+    <div class="responses-container">
+        <h1 class="title">Quiz Responses</h1>
+    
+        <div id="responsesList"></div>
+    </div>
+    
+    <script src="../../JS/professor/students_responses.js" defer></script>
+</body>
+</html>

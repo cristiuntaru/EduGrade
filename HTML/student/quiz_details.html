@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Details - EduGrade</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/student/quiz_details.css">
+
+    <script src="../../JS/student/quiz_details.js" defer></script>
+</head>
+
+<body>
+
+<div class="details-wrapper">
+
+    <h1 id="quizTitle"></h1>
+    <p id="quizMeta"></p>
+
+    <div class="score-box">
+        <span>Final Score</span>
+        <h2 id="finalScore"></h2>
+    </div>
+
+    <h2>Answer Breakdown</h2>
+    <div id="questionsContainer"></div>
+
+    <button class="btn back-btn" onclick="window.location.href='my_grades.html'">
+        Back to My Grades
+    </button>
+
+</div>
+
+</body>
+</html>

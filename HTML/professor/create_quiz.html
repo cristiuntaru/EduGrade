@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade – Create Quiz</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Navbar -->
+    <link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/professor/create_quiz.css">
+
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+
+<body>
+
+    <div id="navbar-placeholder"></div>
+    <script>
+        fetch("../../HTML/general/navbar_professor.html")
+            .then(res => res.text())
+            .then(html => document.getElementById("navbar-placeholder").innerHTML = html);
+    </script>
+    
+    <div class="quiz-container">
+    
+        <h1 class="title">Create a New Quiz</h1>
+    
+        <!-- --------------------- QUIZ INFO --------------------- -->
+        <div class="quiz-card">
+            <label class="input-label">Quiz Title</label>
+            <input id="quizTitle" type="text" placeholder="Enter quiz title">
+        
+            <label class="input-label">Subject</label>
+            <select id="quizSubject">
+                <option value="">Select subject</option>
+                <option value="Algorithms">Algorithms</option>
+                <option value="Data Structures">Data Structures</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Programming">Programming</option>
+                <option value="Tehnologii Web">Tehnologii Web</option>
+            </select>
+        
+            <label class="input-label">Duration (minutes)</label>
+            <input id="quizDuration" type="number" min="1" placeholder="e.g. 30">
+        
+            <label class="input-label">Open Date</label>
+            <input id="quizOpenDate" type="datetime-local">
+        
+            <label class="input-label">Close Date</label>
+            <input id="quizCloseDate" type="datetime-local">
+        
+            <label class="input-label">Description (optional)</label>
+            <textarea id="quizDescription" placeholder="Write a short description…"></textarea>
+        
+            <button id="continueBtn" class="btn primary-btn">Continue → Add Questions</button>
+        </div>
+    
+    
+        <!-- -------------------- QUESTION BUILDER -------------------- -->
+        <div id="questionsSection" class="questions-section hidden">
+        
+            <div class="section-header">
+                <h2 class="subtitle">Questions</h2>
+                <button id="addQuestionBtn" class="btn primary-btn">+ Add Question</button>
+            </div>
+        
+            <div id="questionsContainer"></div>
+        
+        </div>
+    
+        <div class="actions-row">
+            <button id="backBtn" class="btn outline-btn">Back</button>
+            <button id="saveDraftBtn" class="btn secondary-btn">Save Draft</button>
+            <button id="publishQuizBtn" class="btn publish-btn">Publish Quiz</button>
+        </div>
+    
+    
+    </div>
+    
+    <script src="../../JS/professor/create_quiz.js" defer></script>
+
+</body>
+</html>

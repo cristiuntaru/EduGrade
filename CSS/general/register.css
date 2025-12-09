@@ -1,0 +1,43 @@
+.auth-wrapper {
+    background: var(--bg-soft);
+}
+
+.auth-card {
+    width: 380px;
+    padding: var(--space-l);
+}
+
+.auth-card:hover {
+    transform: none !important;
+    box-shadow: var(--shadow);
+}
+
+.full-btn {
+    width: 100%;
+}
+
+.switch-text {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-medium);
+    text-align: center;
+}
+
+.link {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+hr {
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid var(--border-light);
+}
+
+.dev-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade - Professor Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Navbar -->
+    <link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/professor/dashboard_professor.css">
+
+    <!-- Scripts -->
+    <script src="../../JS/general/logout.js" defer></script>
+    <script src="../../JS/general/errorHandler.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+
+<body>
+
+<div id="navbar-placeholder"></div>
+
+<script>
+    fetch("../../HTML/general/navbar_professor.html")
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById("navbar-placeholder").innerHTML = html;
+        });
+</script>
+
+<div class="dashboard-container">
+
+    <h1 class="title">Welcome, Professor!</h1>
+    <p class="subtitle">Efficient tools to manage quizzes, evaluate students, and optimize learning.</p>
+
+    <div class="card-grid">
+
+        <div class="dash-card" onclick="location.href='create_quiz.html'">
+            <h2>Create Quiz</h2>
+            <p>Build new quizzes with custom questions and settings.</p>
+        </div>
+
+        <div class="dash-card" onclick="location.href='manage_quizzes.html'">
+            <h2>Manage Quizzes</h2>
+            <p>Edit, publish, or schedule existing quizzes.</p>
+        </div>
+
+        <div class="dash-card" onclick="location.href='scan_upload.html'">
+            <h2>Scan & Upload</h2>
+            <p>Upload paper quizzes for OCR automatic grading.</p>
+        </div>
+
+        <div class="dash-card" onclick="location.href='analytics.html'">
+            <h2>Analytics</h2>
+            <p>Trends, difficulty analysis, and student weaknesses.</p>
+        </div>
+
+    </div>
+
+    <div class="tip-card">
+        <h3>Tip of the Day</h3>
+        <p id="tipText">Loading...</p>
+    </div>
+
+    <script src="../../JS/professor/dashboard_professor.js" defer></script>
+
+</div>
+
+</body>
+</html>

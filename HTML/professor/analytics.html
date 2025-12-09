@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics – EduGrade</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+    <link rel="stylesheet" href="../../CSS/professor/analytics.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JS -->
+    <script src="../../JS/professor/analytics.js" defer></script>
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+
+<body>
+
+<div id="navbar-placeholder"></div>
+<script>
+    fetch("../../HTML/general/navbar_professor.html")
+        .then(res => res.text())
+        .then(html => document.getElementById("navbar-placeholder").innerHTML = html);
+</script>
+
+<div class="analytics-wrapper">
+
+    <h1>Analytics Dashboard</h1>
+
+    <!-- SELECT QUIZ -->
+    <div class="select-container">
+        <label>Select Quiz:</label>
+        <select id="quizSelect" class="analytics-select"></select>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+        <div class="kpi-card"><h3>Average Score</h3><p id="avgScore">–</p></div>
+        <div class="kpi-card"><h3>Highest Score</h3><p id="highScore">–</p></div>
+        <div class="kpi-card"><h3>Lowest Score</h3><p id="lowScore">–</p></div>
+        <div class="kpi-card"><h3>Submissions</h3><p id="subCount">–</p></div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-grid">
+        <div class="chart-box">
+            <h3>Score Distribution</h3>
+            <canvas id="scoreChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3>Question Difficulty</h3>
+            <canvas id="difficultyChart"></canvas>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <h3 class="submissions-section">Student Submissions</h3>
+    <table class="students-table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Score</th>
+                <th>Submitted At</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody id="subTable"></tbody>
+    </table>
+
+    <!-- INSIGHTS -->
+    <div class="insights">
+        <h3>Insights</h3>
+        <p id="insightText">Select a quiz to generate insights...</p>
+    </div>
+
+</div>
+
+</body>
+</html>

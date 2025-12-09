@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade – View Quiz</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Navbar -->
+    <link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/professor/view_quiz.css">
+
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div id="navbar-placeholder"></div>
+<script>
+    fetch("../../HTML/general/navbar_professor.html")
+        .then(r => r.text())
+        .then(html => document.getElementById("navbar-placeholder").innerHTML = html);
+</script>
+
+<div class="view-container">
+
+    <h1 class="title">Quiz Details</h1>
+
+    <!-- QUIZ INFO -->
+    <div id="quizInfoCard" class="quiz-info-card"></div>
+
+    <h2 class="subtitle">Questions</h2>
+    <div id="questionsList"></div>
+
+    <button class="btn back-to-manage" onclick="location.href='manage_quizzes.html'">
+        Back to My Quizzes
+    </button>
+
+</div>
+
+<script src="../../JS/professor/view_quiz.js" defer></script>
+
+</body>
+</html>

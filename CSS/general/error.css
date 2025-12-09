@@ -1,0 +1,39 @@
+.error-wrapper {
+    /* Layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Box-model */
+    min-height: 100vh;
+    padding: var(--space-l);
+
+    /* Visual */
+    background: var(--bg-soft);
+}
+
+.error-card {
+    /* Box-model */
+    max-width: 500px;
+    padding: var(--space-l);
+
+    /* Layout */
+    text-align: center;
+}
+
+.error-title {
+    /* Typography */
+    font-size: 48px;
+    color: var(--primary);
+    margin-bottom: var(--space-m);
+}
+
+.error-message {
+    /* Typography */
+    font-size: 18px;
+    color: var(--text-medium);
+    line-height: 1.5;
+
+    /* Spacing */
+    margin-bottom: var(--space-l);
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade – Take Quiz</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/student/take_quiz.css">
+
+    <!-- Error Handler -->
+    <script src="../../JS/general/errorHandler.js" defer></script>
+</head>
+
+<body>
+
+<div class="quiz-wrapper">
+
+    <!-- HEADER -->
+    <header class="quiz-header">
+        <h2 id="quizTitle">Intro to Algorithms – Week 3 Quiz</h2>
+
+        <div class="quiz-info-right">
+            <span id="questionProgress">Question 1 / 5</span>
+            <span id="timer" class="quiz-timer">20:00</span>
+        </div>
+    </header>
+
+    <!-- MAIN QUIZ AREA -->
+    <main class="quiz-content">
+
+        <!-- Navigation bullets -->
+        <aside class="question-nav" id="questionNav">
+            <!-- Populated by JS -->
+        </aside>
+
+        <!-- Question card -->
+        <section class="question-card">
+            <h3 id="questionText">Loading question...</h3>
+
+            <div id="answerOptions" class="answer-options">
+                <!-- Answer choices inserted by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER BUTTONS -->
+    <footer class="quiz-footer">
+        <button id="prevBtn" class="btn secondary-btn">Back</button>
+        <button id="nextBtn" class="btn primary-btn">Next</button>
+        <button id="submitBtn" class="btn danger-btn hidden">Submit Quiz</button>
+    </footer>
+
+</div>
+
+<!-- QUIZ LOGIC (mock for now) -->
+<script src="../../JS/student/take_quiz.js" defer></script>
+
+</body>
+</html>

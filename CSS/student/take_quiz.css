@@ -1,0 +1,137 @@
+/* ---- PAGE WRAPPER ---- */
+.quiz-wrapper {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* ---- HEADER ---- */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.quiz-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.quiz-info-right {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+}
+
+.quiz-timer {
+    color: #e63946;
+    font-weight: bold;
+}
+
+/* ---- MAIN CONTENT ---- */
+.quiz-content {
+    display: flex;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+/* Navigation - question bullets */
+.question-nav {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.question-bullet {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.question-bullet.active {
+    background: var(--primary);
+    color: white;
+}
+
+.question-bullet.answered {
+    background: var(--primary-light);
+}
+
+/* ---- QUESTION CARD ---- */
+.question-card {
+    flex: 1;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px #00000010;
+}
+
+.question-card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/* ---- ANSWER OPTIONS ---- */
+.answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.answer-option {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.answer-option:hover {
+    background: #f5f7ff;
+}
+
+/* ---- FOOTER BUTTONS ---- */
+.quiz-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* Whole answer option styling */
+.answer-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer-option:hover {
+    background: #f7f9ff;
+    border-color: #b5c9ff;
+}
+
+.answer-option.selected {
+    background: #e8f0ff;
+    border-color: #4a6cf7;
+}
+

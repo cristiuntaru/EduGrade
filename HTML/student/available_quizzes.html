@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade - Available Quizzes</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/student/available_quizzes.css">
+
+    <!-- Error Handler -->
+    <script src="../../JS/general/errorHandler.js" defer></script>
+    <!-- Logout Logic -->
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <script>
+        // Incarca navbar-ul pentru student
+        fetch("../../HTML/general/navbar_student.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("navbar-placeholder").innerHTML = html;
+            });
+    </script>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-container">
+        <header class="page-header">
+            <h1>Available Quizzes</h1>
+            <p class="subtitle">
+                These quizzes have been assigned to you by your professors.
+            </p>
+        </header>
+
+        <div class="filter-bar">
+
+            <div class="filter-group">
+                <label for="filterSubject">Subject</label>
+                <select id="filterSubject">
+                    <option value="All">All subjects</option>
+                    <option value="Algorithms">Algorithms</option>
+                    <option value="Data Structures">Data Structures</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Tehnologii Web">Tehnologii Web</option>
+                </select>
+            </div>
+        
+            <div class="filter-group">
+                <label for="filterStatus">Status</label>
+                <select id="filterStatus">
+                    <option value="Any">Any</option>
+                    <option value="Active">Active</option>
+                    <option value="Upcoming">Upcoming</option>
+                    <option value="Expired">Expired</option>
+                </select>
+            </div>
+
+        </div>
+        
+        <section id="quizList" class="quiz-list"></section>
+    </div>
+
+    <script src="../../JS/student/available_quizzes.js" defer></script>
+
+</body>
+</html>

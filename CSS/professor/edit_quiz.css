@@ -1,0 +1,13 @@
+.archive-btn {
+    width: 100%;
+    padding: 14px 0;
+    background: #b34700;
+    color: white;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.archive-btn:hover {
+    background: rgb(241, 76, 76);
+}

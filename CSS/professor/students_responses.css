@@ -1,0 +1,38 @@
+.title {
+    margin-bottom: 20px;
+}
+
+.responses-container {
+    padding: 40px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.response-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.response-card .name {
+    font-weight: 700;
+    font-size: 19px;
+}
+
+.response-meta {
+    color: #555;
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+.view-submission-btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}

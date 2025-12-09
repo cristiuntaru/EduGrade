@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Submission - EduGrade</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    
+    <!-- folosim ACELAȘI CSS ca la student la quiz_details -->
+    <link rel="stylesheet" href="../../CSS/student/quiz_details.css">
+
+    <script src="../../JS/professor/view_submission.js" defer></script>
+    <script src="../../JS/general/logout.js" defer></script>
+</head>
+
+<body>
+
+    <div id="navbar-placeholder"></div>
+    
+    <div class="details-wrapper">
+    
+        <h1 id="quizTitle"></h1>
+        <p id="quizMeta"></p>
+    
+        <div class="score-box">
+            <span>Final Score</span>
+            <h2 id="finalScore"></h2>
+        </div>
+    
+        <h2>Answer Breakdown</h2>
+        <div id="questionsContainer"></div>
+    
+        <button class="btn back-btn" onclick="history.back()">
+            Back
+        </button>
+    
+    </div>
+
+</body>
+</html>
+

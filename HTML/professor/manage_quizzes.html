@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>EduGrade – Manage Quizzes</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Navbar -->
+    <link rel="stylesheet" href="../../CSS/general/navbar_professor.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/professor/manage_quizzes.css">
+
+    <script src="../../JS/general/logout.js" defer></script>
+    <!-- Navbar Toggle Logic -->
+    <script src="../../JS/general/navbar_toggle.js" defer></script>
+</head>
+
+<body>
+
+    <div id="navbar-placeholder"></div>
+    <script>
+        fetch("../../HTML/general/navbar_professor.html")
+            .then(res => res.text())
+            .then(html => document.getElementById("navbar-placeholder").innerHTML = html);
+    </script>
+
+    <div class="quiz-container">
+        <h1 class="title">My Quizzes</h1>
+        <div class="quiz-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="published">Published</button>
+            <button class="filter-btn" data-filter="draft">Draft</button>
+            <button class="filter-btn" data-filter="archived">Archived</button>
+        </div>
+        <div id="quizList" class="quiz-list"></div>
+    </div>
+
+    <script src="../../JS/professor/manage_quizzes.js" defer></script>
+</body>
+</html>

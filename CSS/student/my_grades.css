@@ -1,0 +1,72 @@
+/* --- Container --- */
+
+.page-subtitle {
+    margin-top: 12px;
+    margin-bottom: 24px;
+}
+
+.grades-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 10px;
+}
+
+/* --- Grade card --- */
+.grade-item {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+    border-left: 6px solid var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Left info */
+.grade-info h3 {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.grade-info p {
+    margin: 2px 0;
+    color: #555;
+}
+
+/* Score badge */
+.score-badge {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+
+/* Score colors */
+.score-low {
+    background: #ff4b4b;
+}
+
+.score-medium {
+    background: #f0b400;
+}
+
+.score-high {
+    background: #4caf50;
+}
+
+/* View details button */
+.view-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--primary);
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.view-btn:hover {
+    background: #246bff;
+}

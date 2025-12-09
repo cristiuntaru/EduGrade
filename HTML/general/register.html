@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduGrade - Register</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../CSS/general/register.css">
+</head>
+<body>
+    
+    <div class="auth-wrapper full-height center">
+        <div class="auth-card card">
+            <h2 class="title text-center">Create Your Account</h2>
+        
+            <form id="registerForm">
+                <input type="text" id="fullName" class="input" placeholder="Full Name" required>
+                <input type="email" id="email" class="input" placeholder="Email" required>
+                <input type="password" id="password" class="input" placeholder="Password" required>
+            
+                <select id="role" class="input">
+                    <option value="student">Student</option>
+                    <option value="professor">Professor</option>
+                </select>
+            
+                <button type="submit" class="btn full-btn">Register</button>
+            </form>
+        
+            <p class="switch-text">
+                Already have an account?
+                <a href="login.html" class="link">Log in here</a>
+            </p>
+        
+            <hr>
+        
+            <h3 class="subtitle text-center">Development Quick Access</h3>
+        
+            <div class="dev-buttons">
+                <button class="btn-secondary btn" 
+                    onclick="location.href='../professor/dashboard_professor.html'">
+                    Professor Dashboard
+                </button>
+            
+                <button class="btn btn" 
+                    onclick="location.href='../student/dashboard_student.html'">
+                    Student Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../../JS/general/register.js"></script>
+    <script src="../../JS/general/errorHandler.js"></script>
+
+</body>
+</html>
