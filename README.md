@@ -154,19 +154,7 @@ Backend-ul final va expune endpoint-uri precum:
 
 * * * * *
 
-9. Plan de dezvoltare viitor
--------------------------------
-
--   Implementare backend Flask + baza de date
--   Modul OCR complet (scanare + detecție răspunsuri)
--   AI Feedback Assistant (LLM + generare de recomandări)
--   Export / Import CSV pentru rezultate
--   Administrare conturi, clase și permisiuni
--   Dashboard multi-rol pentru Admin / Profesor / Student
-
-* * * * *
-
-10. Authors
+9. Authors
 ------------
 
 **Cristian Untaru**\
