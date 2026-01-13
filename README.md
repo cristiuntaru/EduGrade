@@ -1,163 +1,133 @@
 EduGrade - Quiz & Grading Management System
-==============================================
+==========================================
 
-O aplicație web modernă pentru profesori și studenți, care permite crearea, gestionarea și corectarea testelor tip quiz. Platforma suportă atât teste online, cât și scanarea foilor completate pe hârtie.
+EduGrade is a web platform for professors and students to create, take, and grade quizzes.
+It supports online quizzes and a scan-and-upload workflow for paper answer sheets.
 
-* * * * *
+1. Overview
+-----------
+EduGrade streamlines quiz creation, grading, and feedback. The project uses a static
+frontend (HTML/CSS/JS) and a real Flask backend with PostgreSQL for persistence.
 
-1. Descriere generală
-------------------------
+Core highlights:
+- Role-based dashboards (professor / student)
+- Quiz creation and management
+- Submissions and scoring
+- Analytics and AI feedback summaries
+- CSV import/export tools
+- OCR scan-and-upload workflow (accuracy tuning ongoing)
 
-EduGrade simplifică modul în care profesorii creează și corectează teste, iar studenții primesc rezultate și feedback instant.\
-Aplicația funcționează 100% în browser și este construită pe un frontend static (HTML, CSS, JS), cu plan de extindere către un backend real (Flask + OCR + AI).
+2. Main Features
+----------------
 
-Proiectul demonstrează:
+Professor:
+- Create, edit, publish, and delete quizzes
+- View student submissions and scores
+- Analytics dashboard with KPIs and charts
+- Scan & upload paper answer sheets (OCR)
 
--   organizarea unei platforme educaționale
+Student:
+- See available quizzes
+- Take quizzes online
+- View grades and submission details
+- AI feedback summary and recommendations
 
--   crearea și evaluarea quiz-urilor
+3. Project Structure
+--------------------
+backend/   - Flask backend (routes, models, migrations)
+CSS/       - styles (base, professor, student)
+HTML/      - pages (general, professor, student)
+JS/        - frontend logic (API client, pages)
+MEDIA/     - logos and icons
+README.md  - documentation
 
--   afișarea de analize statistice
+Role separation:
+- /HTML/student/, /CSS/student/, /JS/student/
+- /HTML/professor/, /CSS/professor/, /JS/professor/
 
--   generarea de feedback inteligent pentru studenți
-
-* * * * *
-
-2. Funcționalități principale
--------------------------------
-
-###  Profesor
-
--   Creare quiz-uri cu întrebări multiple-choice
-
--   Editare / ștergere / publicare quiz-uri
-
--   Vizualizare răspunsuri trimise de studenți
-
--   Dashboard cu statistici și analize (grafice, KPI-uri)
-
--   Modul „Scan & Upload" pentru viitorul OCR
-
-###  Student
-
--   Vizualizare quiz-uri disponibile
-
--   Completare teste online
-
--   Vizualizare note și status per test
-
--   Feedback inteligent generat automat
-
--   Dashboard și „Tip of the Day"
-
-* * * * *
-
-3. Structura proiectului
-----------------------------
-
-CSS/        → stilurile aplicației (general + pagini)\
-HTML/       → paginile pentru student & profesor\
-JS/         → logica aplicației (gestionare quiz-uri, analytics, feedback)\
-MEDIA/      → iconițe și logo-uri\
-README.md   → documentația proiectului
-
-Platforma este complet separată pe roluri:
-
--   `/HTML/student/`
--   `/HTML/professor/`
--   `/CSS/student/`
--   `/CSS/professor/`
--   `/JS/student/`
--   `/JS/professor/`
-
-* * * * *
-
-4. Tehnologii utilizate
----------------------------
-
-### Frontend (implementat)
-
--   **HTML5, CSS3, JavaScript**
--   **Chart.js** -- grafice și statistici
--   **LocalStorage API** -- stocarea datelor pentru demonstrație
--   **SVG Assets** -- logo + favicon
-
-### Planned for full version
-
--   **Python Flask** -- backend REST API
--   **PostgreSQL / MySQL** -- baza de date
--   **OpenCV** -- OCR pentru corectarea testelor scanate
--   **LLM / NLP** -- AI Feedback Assistant
-
-* * * * *
-
-5. Instalare și rulare
--------------------------
-
-### Instalare
-
-Clonează repository-ul:
-
-`git clone https://github.com/cristiuntaru/EduGrade.git`
-
-Apoi deschide folderul proiectului în **VS Code**.
-
-* * * * *
-
-### Rulare
-
-Fiind o aplicație statică, poate fi rulată direct în browser:
-
-1.  Deschide fișierul:
-
-`HTML/general/home.html`
-
-și
-
-2.  Rulează cu extensia **Live Server** din VS Code.
-
-* * * * *
-
-6. Documentație API (planificare)
-------------------------------------
-
-Backend-ul final va expune endpoint-uri precum:
-
--   `POST /auth/login`
--   `GET /quizzes`
--   `POST /submit`
--   `GET /analytics/:quizId`
-
-*Notă: acestea nu sunt încă implementate în versiunea curentă.*
-
-* * * * *
-
-7. Testare
+4. Tech Stack
 -------------
+Frontend:
+- HTML5, CSS3, JavaScript
+- Chart.js (analytics charts)
 
-În prezent proiectul este numai frontend, deci nu include un framework de testare.\
-În versiunea completă, backend-ul Flask va utiliza:
+Backend:
+- Python Flask
+- Flask-JWT-Extended (auth)
+- Flask-SQLAlchemy (ORM)
+- Flask-Migrate + Alembic (migrations)
 
--   teste unitare
--   teste de integrare
--   Pytest
+Database:
+- PostgreSQL
 
-* * * * *
+OCR:
+- OpenCV (scan processing)
 
-8. Limitări actuale
+5. Install and Run
+------------------
+
+5.1 Clone project
+- Download ZIP from: https://github.com/cristiuntaru/EduGrade
+  or
+- git clone https://github.com/cristiuntaru/EduGrade.git
+
+5.2 Backend setup
+Open PowerShell and run:
+
+cd "C:\Users\untar\Documents\Visual Studio Code Projects\Tehnologii Web\Edugrade - Proiect TW\Edugrade\backend"
+.venv\Scripts\activate
+pip install -r requirements.txt
+
+Set env variables (example):
+$env:DATABASE_URL="postgresql+psycopg2://edugrade_user:parola_puternica@localhost:5432/edugrade"
+$env:JWT_SECRET="schimba-acest-secret"
+
+Run migrations:
+flask db upgrade
+
+Start backend:
+python app.py
+
+5.3 Frontend
+Open with Live Server or directly in browser:
+http://127.0.0.1:5500/Edugrade/HTML/general/login.html
+
+6. API Endpoints (implemented)
+------------------------------
+- POST /api/auth/register
+- POST /api/auth/login
+- GET  /api/auth/me
+
+- GET  /api/quizzes
+- POST /api/quizzes
+- GET  /api/quizzes/<id>
+- PUT  /api/quizzes/<id>
+- DELETE /api/quizzes/<id>
+
+- POST /api/submissions
+- GET  /api/submissions/<id>
+- GET  /api/submissions/quiz/<id>
+- GET  /api/submissions/me
+
+- GET  /api/csv/quizzes/<id>/export-results
+- POST /api/csv/quizzes/import
+
+- POST /api/ocr/grade
+- GET  /api/ocr/debug/<filename>
+
+- GET  /api/health
+
+7. Testing
+----------
+Manual testing via UI and API calls. OCR accuracy tuning is ongoing.
+
+8. Current Limitations
 ----------------------
-
--   Nu există backend real (doar LocalStorage).
--   OCR și AI Feedback sunt doar prototipuri.
--   Nu există management real de utilizatori (login autentic).
--   Datele nu sunt persistente în afara browserului.
-
-* * * * *
+- OCR accuracy is still being improved.
+- Scan quality affects OCR reliability (lighting, alignment, print settings).
+- No automated test suite yet.
 
 9. Authors
-------------
-
-**Cristian Untaru**\
-Email: **cristian.untaru05@e-uvt.ro**\
-**Cătălin Pavel**\
-Email: **catalin.pavel04@e-uvt.ro**
+----------
+Cristian Untaru - cristian.untaru05@e-uvt.ro
+Catalin Pavel - catalin.pavel04@e-uvt.ro
