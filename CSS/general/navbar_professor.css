@@ -1,8 +1,8 @@
 .navbar {
     width: 100%;
     height: 60px;
-    background: white;
-    border-bottom: 1px solid #ddd;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border-light);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,7 +35,7 @@
 }
 
 .nav-links a:hover {
-    background: #f3f4f6;
+    background: var(--surface-muted);
     color: var(--primary);
 }
 
@@ -101,6 +101,7 @@
     transform-origin: left center; 
 }
 
+
 /* Responsive Design */
 @media (max-width: 898px) {
     .navbar {
@@ -117,8 +118,8 @@
         left: 0;
         width: 100%;
         flex-direction: column;
-        background: white;
-        border-bottom: 1px solid #ddd;
+        background: var(--bg-light);
+        border-bottom: 1px solid var(--border-light);
         gap: 0;
         max-height: 0;
         overflow: hidden;
@@ -143,6 +144,7 @@
     .logout-btn {
         display: none;
     }
+
 
     .logout-btn-mobile {
         display: block;

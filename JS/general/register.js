@@ -25,20 +25,28 @@ document.getElementById("registerForm").addEventListener("submit", (e) => {
         return;
     }
 
-    // TEMPORARY FRONTEND USER MOCK
-    const user = {
-        name: fullName,
-        email,
-        role
-    };
-
-    localStorage.setItem("currentUser", JSON.stringify(user));
-
-    // Redirect to home or dashboard
-    /*if (role === "professor") {
-        window.location.href = "../professor/dashboard_professor.html";
-    } else {
-        window.location.href = "../student/dashboard_student.html";
-    }*/
-    window.location.href = "../../HTML/general/home.html";
+    apiRequest("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+            name: fullName,
+            email,
+            password,
+            role
+        })
+    })
+        .then(() => apiRequest("/api/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password })
+        }))
+        .then((data) => {
+            setAuthSession(data.access_token, data.user);
+            if (data.user.role === "professor") {
+                window.location.href = "../professor/dashboard_professor.html";
+            } else {
+                window.location.href = "../student/dashboard_student.html";
+            }
+        })
+        .catch((err) => {
+            alert(err.message || "Registration failed.");
+        });
 });

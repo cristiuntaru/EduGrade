@@ -67,6 +67,55 @@
     transform: translateY(0);
 }
 
+.ocr-status {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d6a4f;
+    background: #f6f7fb;
+    border: 1px solid #e4e7ee;
+    padding: 10px 12px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.ocr-status[data-state="error"] {
+    color: #b00020;
+}
+
+.ocr-log {
+    margin-top: 16px;
+    text-align: left;
+}
+
+.ocr-debug-image {
+    max-width: 100%;
+    border: 1px solid #e4e7ee;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: none;
+}
+
+.ocr-debug-link {
+    display: none;
+    margin-bottom: 8px;
+    color: #1d5fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ocr-debug-link:hover {
+    text-decoration: underline;
+}
+
+.ocr-debug-data {
+    font-size: 12px;
+    background: #f6f7fb;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e4e7ee;
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .scan-wrapper {

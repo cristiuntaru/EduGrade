@@ -1,0 +1,89 @@
+@page {
+    size: A4;
+    margin: 18mm;
+}
+
+body {
+    background: #f2f4f7;
+}
+
+.print-toolbar {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+}
+
+.print-page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #fff;
+    margin: 0 auto 24px;
+    padding: 18mm;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    color: #222;
+}
+
+.print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 2px solid #111;
+    padding-bottom: 12px;
+}
+
+.print-header h1 {
+    margin: 0 0 6px;
+    font-size: 24px;
+}
+
+.meta {
+    margin: 0;
+}
+
+.student-line {
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.instructions {
+    margin: 16px 0;
+    font-size: 14px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 60px repeat(4, 1fr);
+    gap: 8px 12px;
+    align-items: center;
+}
+
+.grid-header {
+    font-weight: 600;
+    text-align: center;
+}
+
+.q-number {
+    font-weight: 600;
+}
+
+.bubble {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+@media print {
+    body {
+        background: #fff;
+    }
+    .print-toolbar {
+        display: none;
+    }
+    .print-page {
+        box-shadow: none;
+        margin: 0;
+    }
+}

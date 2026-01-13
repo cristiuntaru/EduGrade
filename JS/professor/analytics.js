@@ -1,25 +1,36 @@
-document.addEventListener("DOMContentLoaded", () => {
-
+document.addEventListener("DOMContentLoaded", async () => {
     const quizSelect = document.getElementById("quizSelect");
-
     const avgScore = document.getElementById("avgScore");
     const highScore = document.getElementById("highScore");
     const lowScore = document.getElementById("lowScore");
     const subCount = document.getElementById("subCount");
-
     const subTable = document.getElementById("subTable");
     const insightText = document.getElementById("insightText");
 
-    let scoreChart, difficultyChart;
-    let chartContainer1Height = 400;
-    let chartContainer2Height = 400;
+    let scoreChart;
+    let difficultyChart;
 
-    // Load quizzes
-    const quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-    const responses = JSON.parse(localStorage.getItem("students_responses") || "[]");
+    const currentUser = getCurrentUser();
+    if (!currentUser || !getAuthToken()) {
+        alert("Please log in again.");
+        window.location.href = "../general/login.html";
+        return;
+    }
 
-    // Populate dropdown
-    quizzes.forEach(q => {
+    let quizzes = [];
+
+    try {
+        const data = await apiRequest("/api/quizzes");
+        quizzes = (data.quizzes || []).filter(
+            (q) => String(q.owner_professor_id) === String(currentUser.id)
+        );
+    } catch (err) {
+        alert(err.message || "Could not load quizzes.");
+        return;
+    }
+
+    quizSelect.innerHTML = `<option value="">Select a quiz</option>`;
+    quizzes.forEach((q) => {
         const opt = document.createElement("option");
         opt.value = q.id;
         opt.textContent = q.title;
@@ -27,57 +38,62 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     quizSelect.addEventListener("change", () => {
-        if (!quizSelect.value) return;
-        const quizId = quizSelect.value;
-
-        updateDashboard(quizId);
+        if (!quizSelect.value) {
+            clearDashboard();
+            return;
+        }
+        updateDashboard(quizSelect.value);
     });
 
-    // Handle responsive chart sizing
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
         if (scoreChart) scoreChart.resize();
         if (difficultyChart) difficultyChart.resize();
     });
 
-    function updateDashboard(quizId) {
+    function clearDashboard() {
+        avgScore.textContent = "-";
+        highScore.textContent = "-";
+        lowScore.textContent = "-";
+        subCount.textContent = "0";
 
-        const quiz = quizzes.find(q => q.id == quizId);
-        const quizRes = responses.filter(r => r.quizId == quizId);
+        if (scoreChart) {
+            scoreChart.destroy();
+            scoreChart = null;
+        }
+        if (difficultyChart) {
+            difficultyChart.destroy();
+            difficultyChart = null;
+        }
 
-        if (quizRes.length === 0) {
-                
-            // Clear KPI values
-            avgScore.textContent = "–";
-            highScore.textContent = "–";
-            lowScore.textContent = "–";
-            subCount.textContent = "0";
-                
-            // Delete previous charts if they exist
-            if (scoreChart) {
-                scoreChart.destroy();
-                scoreChart = null;
-            }
-            if (difficultyChart) {
-                difficultyChart.destroy();
-                difficultyChart = null;
-            }
-        
-            // Clear table
-            subTable.innerHTML = `
-                <tr><td colspan="4" style="text-align:center; padding:15px;">No submissions found.</td></tr>
-            `;
-        
-            // Clear insights
-            insightText.textContent = "There is no data available for this quiz.";
-        
+        subTable.innerHTML =
+            `<tr><td colspan="4" style="text-align:center; padding:15px;">No submissions found.</td></tr>`;
+        insightText.textContent = "Select a quiz to generate insights...";
+    }
+
+    async function updateDashboard(quizId) {
+        const quiz = quizzes.find((q) => String(q.id) === String(quizId));
+        if (!quiz) {
+            clearDashboard();
             return;
         }
-        
 
-        // ---------- KPI ----------
-        const scores = quizRes.map(r => r.score);
+        let submissions = [];
+        try {
+            const data = await apiRequest(`/api/submissions/quiz/${quizId}`);
+            submissions = data.submissions || [];
+        } catch (err) {
+            clearDashboard();
+            alert(err.message || "Could not load submissions.");
+            return;
+        }
 
-        const avg = scores.reduce((a,b)=>a+b,0) / scores.length;
+        if (submissions.length === 0) {
+            clearDashboard();
+            return;
+        }
+
+        const scores = submissions.map((s) => Number(s.score || 0));
+        const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
         const max = Math.max(...scores);
         const min = Math.min(...scores);
 
@@ -86,11 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
         lowScore.textContent = min;
         subCount.textContent = scores.length;
 
-
-        // ---------- Score Distribution ----------
-        const buckets = [0,0,0,0,0];  // 0-2, 2-4, 4-6, 6-8, 8-10
-
-        scores.forEach(s => {
+        const buckets = [0, 0, 0, 0, 0];
+        scores.forEach((s) => {
             if (s < 2) buckets[0]++;
             else if (s < 4) buckets[1]++;
             else if (s < 6) buckets[2]++;
@@ -99,18 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (scoreChart) scoreChart.destroy();
-        
-        const scoreCtx = document.getElementById("scoreChart");
-        scoreChart = new Chart(scoreCtx, {
+        scoreChart = new Chart(document.getElementById("scoreChart"), {
             type: "bar",
             data: {
-                labels: ["0–2","2–4","4–6","6–8","8–10"],
-                datasets: [{
-                    label: "Students",
-                    data: buckets,
-                    backgroundColor: "#4b7cff",
-                    borderRadius: 6
-                }]
+                labels: ["0-2", "2-4", "4-6", "6-8", "8-10"],
+                datasets: [
+                    {
+                        label: "Students",
+                        data: buckets,
+                        backgroundColor: "#4b7cff",
+                        borderRadius: 6
+                    }
+                ]
             },
             options: {
                 responsive: true,
@@ -118,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'bottom'
+                        position: "bottom"
                     }
                 },
                 scales: {
@@ -132,38 +145,55 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        const questions = (quiz.questions || []).slice().sort((a, b) => a.order - b.order);
+        const correctByQuestion = {};
+        questions.forEach((q) => {
+            correctByQuestion[q.id] = (q.choices || [])
+                .filter((c) => c.is_correct)
+                .map((c) => c.label);
+        });
 
-        // ---------- Question Difficulty ----------
-        const questionCorrectCount = Array(quiz.questions.length).fill(0);
+        const questionCorrectCount = Array(questions.length).fill(0);
+        submissions.forEach((submission) => {
+            const answersByQuestion = {};
+            (submission.answers || []).forEach((ans) => {
+                const selected = ans.selected_label
+                    ? ans.selected_label.split(",").map((v) => v.trim()).filter(Boolean)
+                    : [];
+                answersByQuestion[ans.question_id] = selected;
+            });
 
-        quizRes.forEach(res => {
-            res.answers.forEach((ans, i) => {
-                const correctIdx = quiz.questions[i].options
-                    .map((o, idx) => o.correct ? idx : null)
-                    .filter(x => x !== null);
-
-                const allCorrect = ans.length === correctIdx.length &&
-                                   ans.every(a => correctIdx.includes(a));
-
-                if (allCorrect) questionCorrectCount[i]++;
+            questions.forEach((q, idx) => {
+                const selected = answersByQuestion[q.id] || [];
+                const correct = correctByQuestion[q.id] || [];
+                const selectedSet = new Set(selected);
+                const correctSet = new Set(correct);
+                const isCorrect =
+                    selectedSet.size === correctSet.size &&
+                    [...selectedSet].every((v) => correctSet.has(v));
+                if (isCorrect) {
+                    questionCorrectCount[idx] += 1;
+                }
             });
         });
 
-        const difficulty = questionCorrectCount.map(c => (c / quizRes.length) * 100);
+        const difficulty = questionCorrectCount.map(
+            (c) => (c / submissions.length) * 100
+        );
 
         if (difficultyChart) difficultyChart.destroy();
-        
-        const diffCtx = document.getElementById("difficultyChart");
-        difficultyChart = new Chart(diffCtx, {
+        difficultyChart = new Chart(document.getElementById("difficultyChart"), {
             type: "bar",
             data: {
-                labels: quiz.questions.map((_, i) => "Q" + (i+1)),
-                datasets: [{
-                    label: "% Correct",
-                    data: difficulty,
-                    backgroundColor: "#ffa726",
-                    borderRadius: 6
-                }]
+                labels: questions.map((_, i) => `Q${i + 1}`),
+                datasets: [
+                    {
+                        label: "% Correct",
+                        data: difficulty,
+                        backgroundColor: "#ffa726",
+                        borderRadius: 6
+                    }
+                ]
             },
             options: {
                 responsive: true,
@@ -171,12 +201,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'bottom'
+                        position: "bottom"
                     }
                 },
-                scales: { 
-                    y: { 
-                        max: 100, 
+                scales: {
+                    y: {
+                        max: 100,
                         beginAtZero: true,
                         ticks: {
                             stepSize: 20
@@ -186,37 +216,38 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // ---------- TABLE ----------
         subTable.innerHTML = "";
-        quizRes.forEach(r => {
+        submissions.forEach((s) => {
             const tr = document.createElement("tr");
+            const submittedAt = s.submitted_at
+                ? new Date(s.submitted_at).toLocaleString()
+                : "";
 
             tr.innerHTML = `
-                <td>${r.studentName}</td>
-                <td>${r.score}</td>
-                <td>${new Date(r.submittedAt).toLocaleString()}</td>
+                <td>${s.student_name || "Student"}</td>
+                <td>${s.score}</td>
+                <td>${submittedAt}</td>
                 <td>
                     <button class="view-btn"
-                        onclick="location.href='view_submission.html?quiz=${quizId}&student=${r.studentId}'">
+                        onclick="location.href='view_submission.html?submission=${s.id}'">
                         View
                     </button>
                 </td>
             `;
-
             subTable.appendChild(tr);
         });
 
-        // ---------- INSIGHTS ----------
         const hardestIdx = difficulty.indexOf(Math.min(...difficulty));
         const easiestIdx = difficulty.indexOf(Math.max(...difficulty));
 
-        insightText.textContent = `
-            Hardest question: Q${hardestIdx+1} (${difficulty[hardestIdx].toFixed(1)}% correct).
-            Easiest question: Q${easiestIdx+1} (${difficulty[easiestIdx].toFixed(1)}% correct).
-            Average performance suggests quiz difficulty is ${
-                avg < 5 ? "high" : avg < 7 ? "moderate" : "low"
-            }.
-        `;
+        insightText.textContent = `Hardest question: Q${hardestIdx + 1} (${difficulty[
+            hardestIdx
+        ].toFixed(1)}% correct). Easiest question: Q${easiestIdx + 1} (${difficulty[
+            easiestIdx
+        ].toFixed(1)}% correct). Average performance suggests quiz difficulty is ${
+            avg < 5 ? "high" : avg < 7 ? "moderate" : "low"
+        }.`;
     }
 
+    clearDashboard();
 });

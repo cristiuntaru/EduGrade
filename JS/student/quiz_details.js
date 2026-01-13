@@ -1,56 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     const data = JSON.parse(localStorage.getItem("selectedResult"));
-    if (!data) {
+    if (!data || !data.quiz || !data.submission) {
         alert("No quiz selected!");
         window.location.href = "my_grades.html";
         return;
     }
 
-    // Titel + Meta
-    document.getElementById("quizTitle").textContent = data.quizTitle;
-    document.getElementById("quizMeta").textContent =
-        `${data.quizSubject} • ${data.quizAuthor} • Completed on ${new Date(data.dateCompleted).toLocaleString()}`;
+    const quiz = data.quiz;
+    const submission = data.submission;
 
-    // Afișăm scorul final fără zecimale dacă este număr întreg
-    document.getElementById("finalScore").textContent =
-        Number.isInteger(data.score) ? data.score : data.score.toFixed(2);
+    document.getElementById("quizTitle").textContent = quiz.title || "Quiz";
+    document.getElementById("quizMeta").textContent =
+        `${quiz.subject || "N/A"} ? Professor ${quiz.owner_professor_id || ""} ? Completed on ${new Date(submission.submitted_at).toLocaleString()}`;
+
+    document.getElementById("finalScore").textContent = submission.score;
 
     const container = document.getElementById("questionsContainer");
     container.innerHTML = "";
 
-    const questions = data.questions || [];
-    const answers = data.answers || [];
+    const answersByQuestion = {};
+    (submission.answers || []).forEach((ans) => {
+        answersByQuestion[ans.question_id] = ans;
+    });
 
-    // extrage indexurile corecte
-    function getCorrectIndexes(q) {
-        return (q.options || [])
-            .map((opt, i) => opt.correct ? i : null)
-            .filter(i => i !== null);
-    }
+    const questions = (quiz.questions || []).sort((a, b) => a.order - b.order);
 
-    // calculează scorul unei întrebări
-    function calcQuestionScore(q, studentAns) {
-        const correct = getCorrectIndexes(q);
-        const pts = Number(q.points) || 0;
-
-        if (!studentAns || studentAns.length === 0) return 0;
-        if (studentAns.some(s => !correct.includes(s))) return 0;
-
-        return pts * (studentAns.length / correct.length);
-    }
-
-    // Generăm întrebările
     questions.forEach((q, i) => {
-        const studentAns = answers[i] || [];
-        const correct = getCorrectIndexes(q);
-
-        const qScore = calcQuestionScore(q, studentAns);
+        const ans = answersByQuestion[q.id];
+        const qScore = ans ? ans.points_awarded : 0;
 
         const card = document.createElement("div");
         card.className = "question-block";
 
-        // Score frumos fără zecimale dacă e număr întreg
         const shownScore = Number.isInteger(qScore) ? qScore : qScore.toFixed(2);
         const shownPoints = Number.isInteger(q.points) ? q.points : Number(q.points).toFixed(2);
 
@@ -60,28 +42,30 @@ document.addEventListener("DOMContentLoaded", () => {
             <p class="question-score">Score: <strong>${shownScore} / ${shownPoints}</strong></p>
         `;
 
-        // fiecare opțiune
-        q.options.forEach((opt, idx) => {
-            const isCorrect = correct.includes(idx);
-            const isChosen = studentAns.includes(idx);
+        (q.choices || []).forEach((choice) => {
+            const isCorrect = choice.is_correct === true;
+            const selected = ans && ans.selected_label
+                ? ans.selected_label.split(",").map(v => v.trim()).filter(Boolean)
+                : [];
+            const isChosen = selected.includes(choice.label);
 
             let cls = "neutral";
-            let mark = "";  // ✔ sau ✘
+            let mark = "";
 
             if (isCorrect && isChosen) {
                 cls = "correct";
-                mark = "✔";
+                mark = "?";
             } else if (!isCorrect && isChosen) {
                 cls = "incorrect";
-                mark = "✘";
+                mark = "?";
             } else if (isCorrect && !isChosen) {
                 cls = "missed";
-                mark = "✔";
+                mark = "?";
             }
 
             html += `
                 <div class="option ${cls}">
-                    <span class="mark">${mark}</span> ${opt.text}
+                    <span class="mark">${mark}</span> ${choice.label}. ${choice.text}
                 </div>
             `;
         });

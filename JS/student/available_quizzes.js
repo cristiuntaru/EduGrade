@@ -4,56 +4,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const subjectFilter = document.getElementById("filterSubject");
     const statusFilter = document.getElementById("filterStatus");
 
-    // ============================================
-    // 1 Load quizzes from localStorage
-    // ============================================
-    let quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
+    let quizzes = [];
 
-    // Sort newest first
-    quizzes.sort((a, b) => {
-        const dateA = a.createdAt ? new Date(a.createdAt) : new Date(a.id);
-        const dateB = b.createdAt ? new Date(b.createdAt) : new Date(b.id);
-        return dateB - dateA;
-    });
-
-    // ============================================
-    // 2 Determine quiz status: Active / Upcoming / Expired
-    // ============================================
     function getQuizStatus(q) {
         const now = new Date();
-        const open = q.openDate ? new Date(q.openDate) : null;
-        const close = q.closeDate ? new Date(q.closeDate) : null;
+        const open = q.open_date ? new Date(q.open_date) : null;
+        const close = q.close_date ? new Date(q.close_date) : null;
 
-        if (!open || !close) return "Active"; // fallback
-
+        if (!open || !close) return "Active";
         if (now < open) return "Upcoming";
         if (now > close) return "Expired";
         return "Active";
     }
 
-    // Pre-calc status for each quiz
-    quizzes.forEach(q => q._status = getQuizStatus(q));
+    async function loadQuizzes() {
+        try {
+            const data = await apiRequest("/api/quizzes");
+            quizzes = (data.quizzes || []).filter(q => q.status === "published");
+        } catch (err) {
+            alert(err.message || "Could not load quizzes.");
+            return;
+        }
 
-    // ============================================
-    // 3 RENDER FUNCTION (filters + cards)
-    // ============================================
+        quizzes.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+        quizzes.forEach(q => q._status = getQuizStatus(q));
+        renderQuizzes();
+    }
+
     function renderQuizzes() {
-
         container.innerHTML = "";
 
-        let filtered = quizzes.filter(q => q.status === "published");
+        let filtered = quizzes;
 
-        // --- Filter by Subject ---
         if (subjectFilter.value !== "All") {
             filtered = filtered.filter(q => q.subject === subjectFilter.value);
         }
 
-        // --- Filter by Status ---
         if (statusFilter.value !== "Any") {
             filtered = filtered.filter(q => q._status === statusFilter.value);
         }
 
-        // Empty state
         if (filtered.length === 0) {
             container.innerHTML = `
                 <p class="empty-state">
@@ -62,19 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // ============================================
-        // 4 GENERATE CARDS
-        // ============================================
         filtered.forEach(q => {
-
             const card = document.createElement("article");
             card.classList.add("quiz-card", q._status.toLowerCase());
 
-            const open = q.openDate ? new Date(q.openDate).toLocaleString() : null;
-            const close = q.closeDate ? new Date(q.closeDate).toLocaleString() : null;
+            const open = q.open_date ? new Date(q.open_date).toLocaleString() : null;
+            const close = q.close_date ? new Date(q.close_date).toLocaleString() : null;
 
             const dateText = (open && close)
-                ? `Available: <strong>${open}</strong> → <strong>${close}</strong>`
+                ? `Available: <strong>${open}</strong> - <strong>${close}</strong>`
                 : `<em>No date range set</em>`;
 
             card.innerHTML = `
@@ -82,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h2 class="quiz-title">${q.title}</h2>
 
                     <p class="quiz-meta">
-                        <span>Subject: ${q.subject}</span>
+                        <span>Subject: ${q.subject || "N/A"}</span>
                     </p>
 
                     <p class="quiz-info">
@@ -99,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             `;
 
-            // Only allow click when quiz is active
             if (q._status === "Active") {
                 card.querySelector(".quiz-btn").addEventListener("click", () => {
                     window.location.href = `take_quiz.html?id=${q.id}`;
@@ -110,12 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ============================================
-    // 5 Apply filters on change
-    // ============================================
     subjectFilter.addEventListener("change", renderQuizzes);
     statusFilter.addEventListener("change", renderQuizzes);
 
-    // Initial render
-    renderQuizzes();
+    loadQuizzes();
 });

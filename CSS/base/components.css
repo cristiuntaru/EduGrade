@@ -26,6 +26,7 @@
 }
 
 
+
 /* --- INPUTS --- */
 
 .input {
@@ -34,13 +35,14 @@
     border: 1px solid var(--border-light);
     border-radius: var(--radius-small);
     margin-bottom: 12px;
-    background: #fff;
+    background: var(--bg-light);
+    color: var(--text-dark);
 }
 
 /* --- CARD --- */
 
 .card {
-    background: white;
+    background: var(--surface);
     border-radius: var(--radius);
     padding: 25px;
     box-shadow: var(--shadow);

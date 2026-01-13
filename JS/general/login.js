@@ -18,9 +18,19 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
         return;
     }
 
-    // TEMPORARY FRONTEND LOGIN MOCK
-    localStorage.setItem("currentUser", email);
-
-    // Redirect to home (or dashboard)
-    window.location.href = "../general/home.html";
+    apiRequest("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password })
+    })
+        .then((data) => {
+            setAuthSession(data.access_token, data.user);
+            if (data.user.role === "professor") {
+                window.location.href = "../professor/dashboard_professor.html";
+            } else {
+                window.location.href = "../student/dashboard_student.html";
+            }
+        })
+        .catch((err) => {
+            alert(err.message || "Login failed.");
+        });
 });

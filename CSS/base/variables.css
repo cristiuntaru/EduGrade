@@ -16,6 +16,8 @@
     --text-dark: #222831;
     --text-medium: #444;
     --border-light: #ddd;
+    --surface: #ffffff;
+    --surface-muted: #f1f3f6;
 
     /* RADIUS + SHADOWS */
     --radius: 12px;

@@ -16,6 +16,7 @@
 
     <!-- JS -->
     <script src="../../JS/general/logout.js" defer></script>
+    <script src="../../JS/general/api.js" defer></script>
     <script src="../../JS/professor/scan_upload.js" defer></script>
     <!-- Navbar Toggle Logic -->
     <script src="../../JS/general/navbar_toggle.js" defer></script>
@@ -35,6 +36,14 @@
     <h1>Scan & Upload Quiz Sheets</h1>
     <p class="subtitle">Choose how you want to provide the student quiz sheet</p>
 
+    <div class="quiz-card" style="margin-bottom:20px;">
+        <label class="input-label">Quiz ID</label>
+        <input id="ocrQuizId" class="input" type="number" min="1" placeholder="Enter quiz ID">
+
+        <label class="input-label">Student Name</label>
+        <input id="ocrStudentName" class="input" type="text" placeholder="Student full name">
+    </div>
+
     <div class="btn-container">
 
         <!-- Button 1: Scan Using Camera -->
@@ -48,9 +57,16 @@
         </button>
 
         <!-- Hidden File Input -->
-        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" hidden>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" hidden>
         
 
+    </div>
+
+    <div id="ocrStatus" class="ocr-status"></div>
+    <div id="ocrLog" class="ocr-log">
+        <img id="ocrDebugImage" class="ocr-debug-image" alt="">
+        <a id="ocrDebugLink" class="ocr-debug-link" href="#" target="_blank" rel="noopener">Open debug image</a>
+        <pre id="ocrDebugData" class="ocr-debug-data"></pre>
     </div>
 
 </div>

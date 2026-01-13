@@ -9,8 +9,8 @@
 html, body {
     height: 100%;
     font-family: "Segoe UI", Arial, sans-serif;
-    background-color: #ffffff;
-    color: #222831;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
 }
 
 a {

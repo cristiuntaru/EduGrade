@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ------------------ GET QUIZ ID ------------------
     const params = new URLSearchParams(window.location.search);
     const quizId = params.get("id");
 
@@ -10,155 +9,83 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    let quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-    let quiz = quizzes.find(q => q.id == quizId);
-
-    if (!quiz) {
-        alert("Quiz not found!");
-        window.location.href = "manage_quizzes.html";
-        return;
-    }
-
-
-    // ------------------ PREFILL QUIZ DETAILS ------------------
-    document.getElementById("quizTitle").value = quiz.title;
-    document.getElementById("quizSubject").value = quiz.subject;
-    document.getElementById("quizDuration").value = quiz.duration;
-    document.getElementById("quizOpenDate").value = quiz.openDate;
-    document.getElementById("quizCloseDate").value = quiz.closeDate;
-    document.getElementById("quizDescription").value = quiz.description;
+    const titleInput = document.getElementById("quizTitle");
+    const subjectInput = document.getElementById("quizSubject");
+    const durationInput = document.getElementById("quizDuration");
+    const openDateInput = document.getElementById("quizOpenDate");
+    const closeDateInput = document.getElementById("quizCloseDate");
+    const descriptionInput = document.getElementById("quizDescription");
 
     const questionsContainer = document.getElementById("questionsContainer");
     const backBtn = document.getElementById("backBtn");
     const archiveBtn = document.getElementById("archiveBtn");
     const saveDraftBtn = document.getElementById("saveDraftBtn");
-    
+    const saveQuizBtn = document.getElementById("saveQuizBtn");
 
-    // ------------------ BACK BUTTON ------------------
+    let quiz = null;
+
     backBtn.addEventListener("click", () => {
         window.location.href = "manage_quizzes.html";
     });
 
-    // ------------------ SAVE DRAFT ------------------
-    saveDraftBtn.addEventListener("click", () => {
+    function toInputDatetime(value) {
+        if (!value) return "";
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return "";
+        const pad = (n) => String(n).padStart(2, "0");
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
 
-        // Actualizăm datele quizului
-        quiz.title = document.getElementById("quizTitle").value.trim();
-        quiz.subject = document.getElementById("quizSubject").value;
-        quiz.duration = document.getElementById("quizDuration").value;
-        quiz.openDate = document.getElementById("quizOpenDate").value;
-        quiz.closeDate = document.getElementById("quizCloseDate").value;
-        quiz.description = document.getElementById("quizDescription").value.trim();
+    function buildPayload(statusOverride) {
+        const duration = Number(durationInput.value);
 
-        // Preluăm întrebările existente
         const cards = document.querySelectorAll(".question-card");
-
-        quiz.questions = [...cards].map(card => ({
-            id: card.dataset.id,
+        const questions = [...cards].map((card, index) => ({
             text: card.querySelector(".q-text").value.trim(),
             points: Number(card.querySelector(".q-points").value),
-            options: [...card.querySelectorAll(".option-row")].map(row => ({
+            order: index + 1,
+            choices: [...card.querySelectorAll(".option-row")].map((row, optIndex) => ({
+                label: String.fromCharCode(65 + optIndex),
                 text: row.querySelector(".opt-text").value.trim(),
-                correct: row.querySelector(".opt-correct").checked
+                is_correct: row.querySelector(".opt-correct").checked
             }))
         }));
 
-        // Setăm status draft
-        quiz.status = "draft";
-        quiz.updatedAt = Date.now(); // important pentru ordonare
+        return {
+            title: titleInput.value.trim(),
+            subject: subjectInput.value || null,
+            duration: Number.isFinite(duration) && duration > 0 ? duration : 1,
+            open_date: openDateInput.value || null,
+            close_date: closeDateInput.value || null,
+            description: descriptionInput.value.trim() || null,
+            status: statusOverride || quiz.status || "draft",
+            questions
+        };
+    }
 
-        // Salvăm în localStorage
-        const updated = quizzes.map(q => q.id == quiz.id ? quiz : q);
-        localStorage.setItem("quizzes", JSON.stringify(updated));
+    function renderOption(card, option) {
+        const row = document.createElement("div");
+        row.classList.add("option-row");
 
-        alert("Draft saved!");
-        window.location.href = "manage_quizzes.html";
-    });
+        row.innerHTML = `
+            <input type="checkbox" class="opt-correct" ${option.is_correct ? "checked" : ""}>
+            <input type="text" class="opt-text" value="${option.text || ""}">
+            <button class="remove-option">X</button>
+        `;
 
-    // ------------------ ARCHIVE QUIZ ------------------
-    archiveBtn.addEventListener("click", () => {
+        row.querySelector(".remove-option").addEventListener("click", () => row.remove());
+        card.querySelector(".options-box").appendChild(row);
+    }
 
-        if (!confirm("Are you sure you want to archive this quiz?")) return;
-
-        quiz.status = "archived";
-        quiz.updatedAt = Date.now();
-
-        const updated = quizzes.map(q => q.id == quiz.id ? quiz : q);
-        localStorage.setItem("quizzes", JSON.stringify(updated));
-
-        alert("Quiz archived.");
-        window.location.href = "manage_quizzes.html";
-    });
-
-
-
-    // ------------------ RENDER QUESTIONS ------------------
-    quiz.questions.forEach(q => renderQuestionCard(q));
-
-
-    // ------------------ ADD NEW QUESTION ------------------
-    document.getElementById("addQuestionBtn").addEventListener("click", () => {
-        renderQuestionCard({
-            id: crypto.randomUUID(),
-            text: "",
-            points: "",
-            options: []
-        });
-    });
-
-
-
-    // ------------------ PUBLISH CHANGES BUTTON ------------------
-    document.getElementById("saveQuizBtn").addEventListener("click", () => {
-        
-        // Update quiz object
-        quiz.title = document.getElementById("quizTitle").value.trim();
-        quiz.subject = document.getElementById("quizSubject").value;
-        quiz.duration = document.getElementById("quizDuration").value;
-        quiz.openDate = document.getElementById("quizOpenDate").value;
-        quiz.closeDate = document.getElementById("quizCloseDate").value;
-        quiz.description = document.getElementById("quizDescription").value.trim();
-
-        // Update QUIZ QUESTIONS
-        const cards = document.querySelectorAll(".question-card");
-
-        quiz.questions = [...cards].map(card => ({
-            id: card.dataset.id,
-            text: card.querySelector(".q-text").value.trim(),
-            points: Number(card.querySelector(".q-points").value),
-            options: [...card.querySelectorAll(".option-row")].map(row => ({
-                text: row.querySelector(".opt-text").value.trim(),
-                correct: row.querySelector(".opt-correct").checked
-            }))
-        }));
-
-        // ------------------ NEW: UPDATED AT ------------------
-        quiz.updatedAt = Date.now(); 
-
-        quiz.status = "published";
-
-        // ------------------ SAVE BACK TO STORAGE ------------------
-        const updated = quizzes.map(q => q.id == quiz.id ? quiz : q);
-        localStorage.setItem("quizzes", JSON.stringify(updated));
-
-        alert("Quiz updated successfully!");
-
-        window.location.href = "manage_quizzes.html";
-    });
-
-
-
-    // ------------------ RENDER QUESTION CARD ------------------
     function renderQuestionCard(question) {
-
         const card = document.createElement("div");
         card.classList.add("question-card");
-        card.dataset.id = question.id;
+        card.dataset.id = question.id || crypto.randomUUID();
 
         card.innerHTML = `
             <div class="question-top-row">
-                <textarea class="q-text">${question.text}</textarea>
-                <input type="number" class="q-points" value="${question.points}">
+                <textarea class="q-text">${question.text || ""}</textarea>
+                <input type="number" class="q-points" value="${question.points || ""}">
             </div>
 
             <div class="options-title">Options</div>
@@ -170,42 +97,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
         questionsContainer.appendChild(card);
 
-        // Render existing options
-        question.options.forEach(opt => renderOption(card, opt));
+        (question.choices || []).forEach(opt => renderOption(card, opt));
 
-        // Add default options if none exist
-        if (question.options.length === 0) {
-            renderOption(card, { text: "", correct: false });
-            renderOption(card, { text: "", correct: false });
+        if (!question.choices || question.choices.length === 0) {
+            renderOption(card, { text: "", is_correct: false });
+            renderOption(card, { text: "", is_correct: false });
         }
 
-        // Add new option
         card.querySelector(".add-opt-btn").addEventListener("click", () => {
-            renderOption(card, { text: "", correct: false });
+            renderOption(card, { text: "", is_correct: false });
         });
 
-        // Delete question
         card.querySelector(".remove-question").addEventListener("click", () => {
             card.remove();
         });
     }
 
+    document.getElementById("addQuestionBtn").addEventListener("click", () => {
+        renderQuestionCard({ text: "", points: "", choices: [] });
+    });
 
-    // ------------------ RENDER OPTION ------------------
-    function renderOption(card, option) {
-        
-        const row = document.createElement("div");
-        row.classList.add("option-row");
+    async function loadQuiz() {
+        try {
+            const data = await apiRequest(`/api/quizzes/${quizId}`);
+            quiz = data.quiz;
+        } catch (err) {
+            alert(err.message || "Quiz not found!");
+            window.location.href = "manage_quizzes.html";
+            return;
+        }
 
-        row.innerHTML = `
-            <input type="checkbox" class="opt-correct" ${option.correct ? "checked" : ""}>
-            <input type="text" class="opt-text" value="${option.text}">
-            <button class="remove-option">X</button>
-        `;
+        titleInput.value = quiz.title || "";
+        subjectInput.value = quiz.subject || "";
+        durationInput.value = quiz.duration || "";
+        openDateInput.value = toInputDatetime(quiz.open_date);
+        closeDateInput.value = toInputDatetime(quiz.close_date);
+        descriptionInput.value = quiz.description || "";
 
-        row.querySelector(".remove-option").addEventListener("click", () => row.remove());
-
-        card.querySelector(".options-box").appendChild(row);
+        questionsContainer.innerHTML = "";
+        (quiz.questions || []).sort((a, b) => a.order - b.order).forEach(renderQuestionCard);
     }
 
+    saveDraftBtn.addEventListener("click", async () => {
+        try {
+            await apiRequest(`/api/quizzes/${quizId}`, {
+                method: "PUT",
+                body: JSON.stringify(buildPayload("draft"))
+            });
+            alert("Draft saved!");
+            window.location.href = "manage_quizzes.html";
+        } catch (err) {
+            alert(err.message || "Could not save draft.");
+        }
+    });
+
+    archiveBtn.addEventListener("click", async () => {
+        if (!confirm("Are you sure you want to archive this quiz?")) return;
+        try {
+            await apiRequest(`/api/quizzes/${quizId}`, {
+                method: "PUT",
+                body: JSON.stringify(buildPayload("archived"))
+            });
+            alert("Quiz archived.");
+            window.location.href = "manage_quizzes.html";
+        } catch (err) {
+            alert(err.message || "Could not archive quiz.");
+        }
+    });
+
+    saveQuizBtn.addEventListener("click", async () => {
+        try {
+            await apiRequest(`/api/quizzes/${quizId}`, {
+                method: "PUT",
+                body: JSON.stringify(buildPayload("published"))
+            });
+            alert("Quiz updated successfully!");
+            window.location.href = "manage_quizzes.html";
+        } catch (err) {
+            alert(err.message || "Could not update quiz.");
+        }
+    });
+
+    loadQuiz();
 });

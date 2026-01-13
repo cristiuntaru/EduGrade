@@ -1,6 +1,3 @@
-// -----------------------------------------------------
-// MAIN PAGE LOGIC
-// -----------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
     console.log("students_responses.js LOADED");
 
@@ -14,57 +11,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const responsesList = document.getElementById("responsesList");
 
-    // ======================================================
-    // CITIREA RĂSPUNSURILOR
-    // ======================================================
-    const allResponses = JSON.parse(localStorage.getItem("students_responses") || "[]");
+    async function loadResponses() {
+        let submissions = [];
+        let quiz = null;
 
-    // sortăm descrescător după data trimiterii
-    allResponses.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+        try {
+            const [submissionsData, quizData] = await Promise.all([
+                apiRequest(`/api/submissions/quiz/${quizId}`),
+                apiRequest(`/api/quizzes/${quizId}`)
+            ]);
 
-    const quizResponses = allResponses.filter(r => String(r.quizId) === String(quizId));
+            submissions = submissionsData.submissions || [];
+            quiz = quizData.quiz;
+        } catch (err) {
+            alert(err.message || "Could not load responses.");
+            return;
+        }
 
-    if (quizResponses.length === 0) {
-        responsesList.innerHTML = `
-            <p style="color:#555; font-size:18px; margin-top:20px;">
-                No responses yet.
-            </p>
-        `;
-        return;
-    }
+        if (submissions.length === 0) {
+            responsesList.innerHTML = `
+                <p style="color:#555; font-size:18px; margin-top:20px;">
+                    No responses yet.
+                </p>
+            `;
+            return;
+        }
 
-    function formatDate(isoString) {
-        const d = new Date(isoString);
+        const totalPoints = (quiz.questions || []).reduce((sum, q) => sum + Number(q.points || 0), 0);
 
-        const day = String(d.getDate()).padStart(2, "0");
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const year = d.getFullYear();
+        function formatDate(isoString) {
+            const d = new Date(isoString);
 
-        const hours = String(d.getHours()).padStart(2, "0");
-        const minutes = String(d.getMinutes()).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            const month = String(d.getMonth() + 1).padStart(2, "0");
+            const year = d.getFullYear();
 
-        return `${day}.${month}.${year} ${hours}:${minutes}`;
-    }
+            const hours = String(d.getHours()).padStart(2, "0");
+            const minutes = String(d.getMinutes()).padStart(2, "0");
 
+            return `${day}.${month}.${year} ${hours}:${minutes}`;
+        }
 
-    // ======================================================
-    // AFIȘAREA RĂSPUNSURILOR
-    // ======================================================
-    quizResponses.forEach(res => {
-        const card = document.createElement("div");
-        card.classList.add("response-card");
+        submissions.forEach(res => {
+            const card = document.createElement("div");
+            card.classList.add("response-card");
 
-        card.innerHTML = `
-            <div class="name">${res.studentName}</div>
-            <div class="response-meta">Score: ${res.score} / ${res.totalPoints}</div>
-            <div class="response-meta">Submitted: ${formatDate(res.submittedAt)}</div>
-            <button class="view-submission-btn">View submission</button>
-        `;
+            card.innerHTML = `
+                <div class="name">${res.student_name || "Student"}</div>
+                <div class="response-meta">Score: ${res.score} / ${totalPoints}</div>
+                <div class="response-meta">Submitted: ${formatDate(res.submitted_at)}</div>
+                <button class="view-submission-btn">View submission</button>
+            `;
 
-        card.querySelector(".view-submission-btn").addEventListener("click", () => {
-            window.location.href = `view_submission.html?quiz=${encodeURIComponent(quizId)}&student=${encodeURIComponent(res.studentId)}`;
+            card.querySelector(".view-submission-btn").addEventListener("click", () => {
+                window.location.href = `view_submission.html?submission=${encodeURIComponent(res.id)}`;
+            });
+
+            responsesList.appendChild(card);
         });
+    }
 
-        responsesList.appendChild(card);
-    });
+    loadResponses();
 });

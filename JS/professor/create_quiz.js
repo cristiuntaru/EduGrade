@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------------
     let currentQuiz = {
         id: Date.now(),          // id unic
+        serverId: null,
         title: "",
         subject: "",
         duration: "",
@@ -103,6 +104,40 @@ document.addEventListener("DOMContentLoaded", () => {
         return questions;
     }
 
+    function buildPayload(status, questions) {
+        const title = document.getElementById("quizTitle").value.trim();
+        const subject = document.getElementById("quizSubject").value;
+        let duration = Number(document.getElementById("quizDuration").value);
+        if (!Number.isFinite(duration) || duration <= 0) {
+            duration = 1;
+        }
+        const openDate = document.getElementById("quizOpenDate").value;
+        const closeDate = document.getElementById("quizCloseDate").value;
+        const description = document.getElementById("quizDescription").value.trim();
+
+        const mappedQuestions = (questions || []).map((q, index) => ({
+            text: q.text,
+            points: Number(q.points),
+            order: index + 1,
+            choices: (q.options || []).map((opt, optIndex) => ({
+                label: String.fromCharCode(65 + optIndex),
+                text: opt.text,
+                is_correct: opt.correct === true
+            }))
+        }));
+
+        return {
+            title,
+            subject: subject || null,
+            duration,
+            open_date: openDate || null,
+            close_date: closeDate || null,
+            description: description || null,
+            status,
+            questions: mappedQuestions
+        };
+    }
+
     // ----------------------------------------------------------
     // 3. CONTINUE → ARATĂ SECȚIUNEA DE ÎNTREBĂRI
     // ----------------------------------------------------------
@@ -178,17 +213,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const questions = readQuestions(true);
         if (!questions) return;
 
-        currentQuiz.questions  = questions;
-        currentQuiz.status     = "published";
-        currentQuiz.updatedAt  = Date.now();
+        const payload = buildPayload("published", questions);
 
-        const quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-        quizzes.push(currentQuiz);
-
-        localStorage.setItem("quizzes", JSON.stringify(quizzes));
-
-        alert("Quiz published!");
-        window.location.href = "manage_quizzes.html";
+        apiRequest("/api/quizzes", {
+            method: "POST",
+            body: JSON.stringify(payload)
+        })
+            .then(() => {
+                alert("Quiz published!");
+                window.location.href = "manage_quizzes.html";
+            })
+            .catch((err) => {
+                alert(err.message || "Could not publish quiz.");
+            });
     });
 
     // ----------------------------------------------------------
@@ -200,26 +237,29 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!ok) return;
 
         const questions = readQuestions(false) || [];
+        const payload = buildPayload("draft", questions);
 
-        currentQuiz.questions = questions;
-        currentQuiz.status    = "draft";
-        currentQuiz.updatedAt = Date.now();
+        const request = currentQuiz.serverId
+            ? apiRequest(`/api/quizzes/${currentQuiz.serverId}`, {
+                method: "PUT",
+                body: JSON.stringify(payload)
+            })
+            : apiRequest("/api/quizzes", {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
 
-        const quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-
-        // IMPORTANT: Dacă draftul a mai fost salvat → îl actualizăm, nu îl duplicăm
-        const exists = quizzes.find(q => q.id === currentQuiz.id);
-
-        if (exists) {
-            const updated = quizzes.map(q => (q.id === currentQuiz.id ? currentQuiz : q));
-            localStorage.setItem("quizzes", JSON.stringify(updated));
-        } else {
-            quizzes.push(currentQuiz);
-            localStorage.setItem("quizzes", JSON.stringify(quizzes));
-        }
-
-        alert("Draft saved!");
-        window.location.href = "manage_quizzes.html";
+        request
+            .then((data) => {
+                if (data && data.quiz && data.quiz.id) {
+                    currentQuiz.serverId = data.quiz.id;
+                }
+                alert("Draft saved!");
+                window.location.href = "manage_quizzes.html";
+            })
+            .catch((err) => {
+                alert(err.message || "Could not save draft.");
+            });
     });
 
     // ----------------------------------------------------------

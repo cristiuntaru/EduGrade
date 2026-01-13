@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Print Full Quiz</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <link rel="stylesheet" href="../../CSS/professor/print_full_quiz.css">
+</head>
+<body>
+
+<div class="print-toolbar">
+    <button class="btn primary-btn" id="printBtn">Print</button>
+    <button class="btn secondary-btn" onclick="history.back()">Back</button>
+</div>
+
+<div class="print-page" id="printPage">
+    <div class="print-header">
+        <div>
+            <h1 id="quizTitle">Quiz</h1>
+            <p class="meta">Quiz ID: <span id="quizId"></span></p>
+        </div>
+        <div class="student-line">
+            Student Name: ____________________________________
+        </div>
+    </div>
+
+    <div class="instructions">
+        Mark your answers in the grid below. You may select up to 3 answers per question.
+    </div>
+    <div id="printWarning" class="instructions warning" style="display:none;"></div>
+
+    <div class="answer-grid">
+        <h2 class="subtitle">Answer Grid</h2>
+        <div class="grid" id="answerGrid"></div>
+    </div>
+
+    <div class="instructions">
+        Questions:
+    </div>
+    <div class="questions" id="questionList"></div>
+</div>
+
+<script src="../../JS/general/api.js" defer></script>
+<script src="../../JS/professor/print_full_quiz.js" defer></script>
+
+</body>
+</html>

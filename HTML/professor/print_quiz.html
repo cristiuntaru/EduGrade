@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Print Quiz Sheet</title>
+    <link rel="icon" type="image/svg+xml" href="../../MEDIA/WebsiteIcon.svg">
+
+    <link rel="stylesheet" href="../../CSS/base/reset.css">
+    <link rel="stylesheet" href="../../CSS/base/variables.css">
+    <link rel="stylesheet" href="../../CSS/base/layout.css">
+    <link rel="stylesheet" href="../../CSS/base/components.css">
+
+    <link rel="stylesheet" href="../../CSS/professor/print_quiz.css">
+</head>
+<body>
+
+<div class="print-toolbar">
+    <button class="btn primary-btn" id="printBtn">Print</button>
+    <button class="btn secondary-btn" onclick="history.back()">Back</button>
+</div>
+
+<div class="print-page" id="printPage">
+    <div class="print-header">
+        <div>
+            <h1 id="quizTitle">Quiz Answer Sheet</h1>
+            <p class="meta">Quiz ID: <span id="quizId"></span></p>
+        </div>
+        <div class="student-line">
+            Student Name: ____________________________________
+        </div>
+    </div>
+
+    <div class="instructions">
+        Fill the circles for each question. You may select up to 3 answers per question.
+    </div>
+    <div id="printWarning" class="instructions" style="display:none; color:#b00020;"></div>
+
+    <div class="grid" id="answerGrid"></div>
+</div>
+
+<script src="../../JS/general/api.js" defer></script>
+<script src="../../JS/professor/print_quiz.js" defer></script>
+
+</body>
+</html>

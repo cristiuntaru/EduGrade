@@ -7,6 +7,7 @@
     padding: var(--space-l);
 }
 
+
 .auth-card:hover {
     transform: none !important;
     box-shadow: var(--shadow);
@@ -28,16 +29,4 @@
     font-weight: 600;
 }
 
-hr {
-    margin: 25px 0;
-    border: none;
-    border-top: 1px solid var(--border-light);
-}
-
-.dev-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 10px;
-}
 
