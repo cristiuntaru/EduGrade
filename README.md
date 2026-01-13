@@ -1,11 +1,11 @@
-🎓 EduGrade -- Quiz & Grading Management System
+EduGrade -- Quiz & Grading Management System
 ==============================================
 
 O aplicație web modernă pentru profesori și studenți, care permite crearea, gestionarea și corectarea testelor tip quiz. Platforma suportă atât teste online, cât și scanarea foilor completate pe hârtie.
 
 * * * * *
 
-📌 1. Descriere generală
+1. Descriere generală
 ------------------------
 
 EduGrade simplifică modul în care profesorii creează și corectează teste, iar studenții primesc rezultate și feedback instant.\
@@ -23,10 +23,10 @@ Proiectul demonstrează:
 
 * * * * *
 
-⭐ 2. Funcționalități principale
+2. Funcționalități principale
 -------------------------------
 
-### 👨‍🏫 Profesor
+###  Profesor
 
 -   Creare quiz-uri cu întrebări multiple-choice
 
@@ -38,7 +38,7 @@ Proiectul demonstrează:
 
 -   Modul „Scan & Upload" pentru viitorul OCR
 
-### 🎓 Student
+###  Student
 
 -   Vizualizare quiz-uri disponibile
 
@@ -52,7 +52,7 @@ Proiectul demonstrează:
 
 * * * * *
 
-🗂️ 3. Structura proiectului
+3. Structura proiectului
 ----------------------------
 
 CSS/        → stilurile aplicației (general + pagini)\
@@ -72,7 +72,7 @@ Platforma este complet separată pe roluri:
 
 * * * * *
 
-🛠️ 4. Tehnologii utilizate
+4. Tehnologii utilizate
 ---------------------------
 
 ### Frontend (implementat)
@@ -91,10 +91,10 @@ Platforma este complet separată pe roluri:
 
 * * * * *
 
-🔧 5. Instalare și rulare
+5. Instalare și rulare
 -------------------------
 
-### 🔹 Instalare
+### Instalare
 
 Clonează repository-ul:
 
@@ -104,7 +104,7 @@ Apoi deschide folderul proiectului în **VS Code**.
 
 * * * * *
 
-### 🔹 Rulare
+### Rulare
 
 Fiind o aplicație statică, poate fi rulată direct în browser:
 
@@ -118,7 +118,7 @@ Fiind o aplicație statică, poate fi rulată direct în browser:
 
 * * * * *
 
-📡 6. Documentație API (planificare)
+6. Documentație API (planificare)
 ------------------------------------
 
 Backend-ul final va expune endpoint-uri precum:
@@ -132,7 +132,7 @@ Backend-ul final va expune endpoint-uri precum:
 
 * * * * *
 
-🧪 7. Testare
+7. Testare
 -------------
 
 În prezent proiectul este numai frontend, deci nu include un framework de testare.\
@@ -144,7 +144,7 @@ Backend-ul final va expune endpoint-uri precum:
 
 * * * * *
 
-⚠️ 8. Limitări actuale
+8. Limitări actuale
 ----------------------
 
 -   Nu există backend real (doar LocalStorage).
@@ -154,7 +154,7 @@ Backend-ul final va expune endpoint-uri precum:
 
 * * * * *
 
-🚀 9. Plan de dezvoltare viitor
+9. Plan de dezvoltare viitor
 -------------------------------
 
 -   Implementare backend Flask + baza de date
@@ -166,7 +166,7 @@ Backend-ul final va expune endpoint-uri precum:
 
 * * * * *
 
-👤 10. Authors
+10. Authors
 ------------
 
 **Cristian Untaru**\
