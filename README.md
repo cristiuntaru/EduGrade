@@ -4,8 +4,10 @@ EduGrade - Quiz & Grading Management System
 EduGrade is a web platform for professors and students to create, take, and grade quizzes.
 It supports online quizzes and a scan-and-upload workflow for paper answer sheets.
 
-1. Overview
 -----------
+
+1. Overview
+
 EduGrade streamlines quiz creation, grading, and feedback. The project uses a static
 frontend (HTML/CSS/JS) and a real Flask backend with PostgreSQL for persistence.
 
@@ -17,8 +19,10 @@ Core highlights:
 - CSV import/export tools
 - OCR scan-and-upload workflow (accuracy tuning ongoing)
 
-2. Main Features
 ----------------
+
+2. Main Features
+
 
 Professor:
 - Create, edit, publish, and delete quizzes
@@ -32,8 +36,10 @@ Student:
 - View grades and submission details
 - AI feedback summary and recommendations
 
-3. Project Structure
 --------------------
+
+3. Project Structure
+
 backend/   - Flask backend (routes, models, migrations)
 CSS/       - styles (base, professor, student)
 HTML/      - pages (general, professor, student)
@@ -45,8 +51,10 @@ Role separation:
 - /HTML/student/, /CSS/student/, /JS/student/
 - /HTML/professor/, /CSS/professor/, /JS/professor/
 
-4. Tech Stack
 -------------
+
+4. Tech Stack
+
 Frontend:
 - HTML5, CSS3, JavaScript
 - Chart.js (analytics charts)
@@ -63,8 +71,10 @@ Database:
 OCR:
 - OpenCV (scan processing)
 
-5. Install and Run
 ------------------
+
+5. Install and Run
+
 
 5.1 Clone project
 - Download ZIP from: https://github.com/cristiuntaru/EduGrade
@@ -92,8 +102,10 @@ python app.py
 Open with Live Server or directly in browser:
 http://127.0.0.1:5500/Edugrade/HTML/general/login.html
 
-6. API Endpoints (implemented)
 ------------------------------
+
+6. API Endpoints (implemented)
+
 - POST /api/auth/register
 - POST /api/auth/login
 - GET  /api/auth/me
@@ -117,17 +129,23 @@ http://127.0.0.1:5500/Edugrade/HTML/general/login.html
 
 - GET  /api/health
 
-7. Testing
 ----------
+
+7. Testing
+
 Manual testing via UI and API calls. OCR accuracy tuning is ongoing.
 
-8. Current Limitations
 ----------------------
+
+8. Current Limitations
+
 - OCR accuracy is still being improved.
 - Scan quality affects OCR reliability (lighting, alignment, print settings).
 - No automated test suite yet.
 
-9. Authors
 ----------
+
+9. Authors
+
 Cristian Untaru - cristian.untaru05@e-uvt.ro
 Catalin Pavel - catalin.pavel04@e-uvt.ro
