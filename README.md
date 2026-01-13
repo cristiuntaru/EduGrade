@@ -1,4 +1,4 @@
-EduGrade -- Quiz & Grading Management System
+EduGrade - Quiz & Grading Management System
 ==============================================
 
 O aplicație web modernă pentru profesori și studenți, care permite crearea, gestionarea și corectarea testelor tip quiz. Platforma suportă atât teste online, cât și scanarea foilor completate pe hârtie.
